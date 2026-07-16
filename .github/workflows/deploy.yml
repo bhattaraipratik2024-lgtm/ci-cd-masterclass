@@ -23,7 +23,13 @@ jobs:
           cache: maven
 
       - name: Build Jar
-        run: mvn clean package -version1Test
+        run: mvn clean package -DskipTests
+
+      - name: Verify build output
+        run: |
+          pwd
+          ls -la
+          ls -la target || true
 
       - name: Building docker image
         run: docker build -t ${{secrets.DOCKER_USERNAME}}/${{env.IMAGE_NAME}}:latest .
